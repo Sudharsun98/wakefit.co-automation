@@ -1,0 +1,107 @@
+import { test } from '@playwright/test';
+
+test.describe('WakeFit.com_Automation', () => {
+    test("Adding product's to the cart", async ({page})=> {
+        test.setTimeout(1000000)
+        await page.goto('https://www.wakefit.co/', {
+        waitUntil: 'domcontentloaded',
+        });
+        
+        await page.reload();
+        await page.waitForTimeout(3000);
+
+        const Home_Page = await page.$('#app');
+        if (Home_Page){
+            await page.waitForTimeout(3000);
+            await page.locator('#searchinput').click({force:true});
+            await page.waitForTimeout(2000);
+            await page.locator('#searchinputs').clear();
+            await page.locator('#searchinputs').fill('Office Chairs');
+            await page.locator('.search-button').click({force:true});
+            await page.reload();
+            await page.waitForTimeout(5000);
+
+            const Result_Page = await page.$('.category-topbar');
+            if (Result_Page){
+                await page.waitForTimeout(2000);
+                await page.locator('.category-image-container').nth(0).click({force:true});
+                await page.waitForTimeout(5000);
+
+                const View_Page = await page.$('.main-title-text');
+                if (View_Page){
+                    await page.waitForTimeout(2000);
+                    const Item_Price = await page.locator('.price').innerText();
+                    console.log('Item Price: ', Item_Price);
+                    const Coins = await page.locator('.pdp-wallet-section').innerText();
+                    console.log('Earn Coins: ', Coins);
+
+                    // Slider Started//
+                    await page.locator('.right-col').click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.slick-arrow').nth(1).click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.slick-arrow').nth(1).click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.slick-arrow').nth(1).click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.slick-arrow').nth(1).click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.slick-arrow').nth(1).click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.slick-arrow').nth(1).click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.slick-arrow').nth(1).click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.slick-arrow').nth(1).click({force:true});
+                    await page.waitForTimeout(3000);
+                    await page.locator('.ant-modal-close').click({force:true});
+                    await page.waitForTimeout(2000);
+                    // Slider ended //
+
+                    await page.locator('#addtoCart').click({force:true});
+                    await page.waitForTimeout(2000);
+                    await page.locator('#gotoCartMobPopup').click({force:true});
+                    await page.waitForTimeout(3000);
+                    
+                    const CheckOut_Page = page.locator('.review-cart');
+                    if ((await CheckOut_Page.textContent()).includes('Review Cart')){
+                        await page.waitForTimeout(3000);
+                        const Total_Price = await page.locator('.total-amount').nth(1).innerText();
+                        console.log('Total Price: ', Total_Price)
+                        await page.waitForTimeout(3000);
+
+                        await page.locator('.map-pincode-text').click({force:true});
+                        await page.locator('.pincode-body-main-func-input').click({force:true});
+                        await page.locator('.pincode-body-main-func-input').clear();
+                        await page.locator('.pincode-body-main-func-input').fill('628502');
+                        await page.locator('.pincode-body-main-func-btn-valid').click({force:true});
+                        await page.waitForTimeout(3000);
+
+                        const Delivery_Date = await page.locator('.delivery-new').innerText();
+                        console.log('Expected Delivery Date: ', Delivery_Date);
+                        await page.waitForTimeout(3000);
+                        
+                        await page.locator('.deleteItem').click({force:true});
+                        await page.waitForTimeout(3000);
+                        
+                        await page.locator('.cancel').getByText(/Remove from Cart/).click({force:true});
+                        await page.waitForTimeout(3000);
+                        await page.locator('.theme-button-medium').getByText(/Continue Shopping/).click({force:true});
+                    }else{
+                        const CheckOut_Page = "Check Out page isn't loaded properly";
+                        console.log(CheckOut_Page);
+                    }
+                }else{
+                    const View_Page = "View Product page isn't loaded properly";
+                    console.log(View_Page);
+                }
+            }else{
+                const Result_Page = "Result page isn't loaded properly";
+                console.log(Result_Page);
+            }
+        }else{
+            const Home_Page = "Home page isn't loaded properly";
+            console.log(Home_Page);
+        }
+    });
+});
