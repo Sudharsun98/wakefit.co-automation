@@ -38,22 +38,12 @@ test.describe('WakeFit.com_Automation', () => {
                     // Slider Started//
                     await page.locator('.right-col').click({force:true});
                     await page.waitForTimeout(3000);
+
+                    for (let i = 0; i < 8; i++) {
                     await page.locator('.slick-arrow').nth(1).click({force:true});
                     await page.waitForTimeout(3000);
-                    await page.locator('.slick-arrow').nth(1).click({force:true});
-                    await page.waitForTimeout(3000);
-                    await page.locator('.slick-arrow').nth(1).click({force:true});
-                    await page.waitForTimeout(3000);
-                    await page.locator('.slick-arrow').nth(1).click({force:true});
-                    await page.waitForTimeout(3000);
-                    await page.locator('.slick-arrow').nth(1).click({force:true});
-                    await page.waitForTimeout(3000);
-                    await page.locator('.slick-arrow').nth(1).click({force:true});
-                    await page.waitForTimeout(3000);
-                    await page.locator('.slick-arrow').nth(1).click({force:true});
-                    await page.waitForTimeout(3000);
-                    await page.locator('.slick-arrow').nth(1).click({force:true});
-                    await page.waitForTimeout(3000);
+                    }
+
                     await page.locator('.ant-modal-close').click({force:true});
                     await page.waitForTimeout(2000);
                     // Slider ended //
